@@ -1,5 +1,0 @@
-Game begins
-@PlayerA joins
-@PlayerB joins
-@PlayerA plays X
-Game ends

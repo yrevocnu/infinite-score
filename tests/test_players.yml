@@ -1,0 +1,33 @@
+A:
+  fullname: Alice
+  email: alice@bead.glass
+  forum: alice
+
+B:
+  fullname: Bob
+  forum: bob
+  email: bob@gmail.com
+
+C:
+  fullname: Carol
+
+E:
+  fullname: Eve Zdrop
+  email: eve@aol.com
+
+F:
+  fullname: Faythe
+
+G:
+  fullname: Grace Guberment
+
+M:
+  fullname: Mallory Malicious
+  email: mal@lo.ru
+  forum: mal
+
+P:
+  fullname: Peggy Prover
+
+S:
+  fullname: Sybil

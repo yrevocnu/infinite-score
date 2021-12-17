@@ -1,0 +1,84 @@
+2:
+  name: alt-Vitae
+  ordinal: 2nd
+  dates: April 26-29
+  location: The Mythic
+  holiday: the Reorganization of Libya
+  organizer:
+    name: E
+    inspiration: Integration, Alchemy
+    motive: For my friends to meet each other
+    officers:
+      - fruits:
+        player: S
+        title: Saboteur
+      - woods:
+        player: P
+        title: Alpha
+      - reef:
+        player: G
+        title: Commander
+  karma_burned: 2
+  happenings:
+    - Attended Beltane Festival
+    - The Bank of Tiamat issues SamsaraCoin
+    - practices:
+        - high: guided meditiation, D3
+        - middle: Shintaido, neck stretches
+        - low: synths
+    
+1:
+  name: Future Ball
+  ordinal: 1st
+  dates: November 4-7
+  location: Cult HQ
+  holiday: Guy Fawkes Day
+  organizer:
+    name: B
+    motive: Our sociotechnical autopoiesis
+    inspiration: Francisco Varela
+    officers:
+      - fruits:
+        player: M
+        title: Symbol
+      - woods:
+        player: E
+        title: 
+      - reef:
+        player: F
+        title: Commander
+  happenings:
+    - The Grey House forms
+    - practices:
+        high: Hakken
+        middle: Shintaido
+        low: Brazilian Jiu Jitsu
+
+0:
+  name: Glass Bead Party
+  ordinal: 0th
+  dates: July 14, 2018
+  location: Cult HQ
+  holiday: Bastille Day
+  organizer:
+    player: A
+    motive: The emancipation of all beings.
+    inspiration: Seymour Papert
+    officers:
+      - fruits:
+        player: C
+        title: Symbol
+      - woods:
+        player: A
+        title: Facilitator
+      - reef:
+        player: B
+        title: Commander
+  happenings:
+    - The Three Houses form
+    - The first Dance, Dance, Initiation
+    - The Houses together begin their Virtual Reality Homeworld
+    - practices:
+        fruits: Taiji
+        woods: Contact improvisation
+        reef: Brazilian Jiu Jitsu

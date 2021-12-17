@@ -1,0 +1,125 @@
+open:
+  - short: An Ambedkarite
+    value: 1
+    open: 4
+    issuer: Seb
+
+  - short: Noam Chomsky
+    value: 1
+    open: 4
+    issuer: Daria
+  
+  - short: Coleman Hughes or Chloe Valdary
+    value: 1
+    open: 4
+    issuer: Ama
+  
+  - short: A special education teacher
+    value: 1
+    open: 3
+    issuer: Arash
+      
+  - short: Gardner Gould
+    value: 1
+    open: 3
+    issuer: Nate
+      
+  - short: A non gender-specific sugar daddy
+    value: 4
+    long: A wealthy person willing to finance Yrevocnu in its current form.
+    open: 3
+    issuer: Pope
+      
+  - short: Somebody who has the requisite skills to build the Yrevocnu sexbot
+    value: 1
+    open: 3
+    issuer: Suby
+      
+  - short: A professional surfer
+    value: 1
+    long: Somebody who makes over $1000 a year from surfing
+    open: 3
+    issuer: Mar
+      
+  - short: Somebody who will teach how to cook curry from scratch
+    value: 1
+    open: 3
+    issuer: Trev
+      
+  - short: A textile maker
+    value: 1
+    long: Especially, a maker of rugs. Especially, one whose designs are data driven.
+    open: 3
+    issuer: Sam
+
+  - short: Greta Thunberg
+    value: 1
+    open: 3
+    issuer: Arash
+
+  - short: A person who has experienced both obstacles to emancipation and privilege
+    value: 1
+    long: A person who has had experiences as a member of different classes or cultures where at least one of those experiences involved overcoming obstacles to emancipation and one of those experiences came with privilege, whether it was earned or unearned
+    open: 2
+    issuer: Ama
+
+  - short: Someone who is intelligent about money
+    value: 1
+    long: Someone who is intelligent about money--how to manage it, and how to invest it. This person should also have a good grasp, if not educational background, on economics - both national and international. Ideally, this person would be able to give a talk at a prison, where the information they share would be useful and implementable advice for the inmates when they leave.
+    open: 2
+    issuer: Ama
+
+  - short: An enthusiastic teacher of youth
+    value: 1
+    long: An enthusiastic teacher of youth. Currently practicing with 3-5 years of professional experience working with young people aged 12-18. Must be Enneagram Type 7.
+    open: 2
+    issuer: Seb
+
+  - short: A new attendee who volunteers to organize the next event
+    value: 4
+    open: 2
+    issuer: Ben
+
+closed:
+  - short: Game builder (1)
+    long: Somebody that will work directly with us on the project of building a video game.
+    value: 1
+    open: 4
+    closed: 5
+    issuer: Las
+    target: Rob
+    awardee: Nate
+
+  - short: Game builder (2)
+    long: Somebody that will work directly with us on the project of building a video game.
+    value: 2
+    open: 4
+    closed: 5
+    issuer: Pope
+    target: Rob
+    awardee: Nate
+
+  - short: Somebody who cannot speak any English
+    value: 1
+    open: 4
+    closed: 5
+    issuer: Ben
+    target: Theo
+    awardee: Daria
+
+  - short: wants achievement with Yrevocnu
+    value: 1
+    long: A person who actively wants to achieve something with Yrevocnu members at the Future Ball, such as learning and/or teaching something at an introductory level, after having had their recruiter explain their Yrevocnu experiences. If multiple individuals fulfill this requirement, preference will go to collaborations with specific existing members (which may include the recruiter). In other words, bringing a buddy you want to do something with is an ideal example.
+    open: 2
+    closed: 4
+    issuer: Dav
+    target: Liz
+    awardee: Pope
+
+  - short: Leo DiCaprio or Sergey Lavrov
+    value: 1
+    open: 2
+    closed: 3
+    issuer: Daria
+    target: Mar
+    awardee: Ben
