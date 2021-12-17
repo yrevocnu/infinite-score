@@ -92,7 +92,8 @@ class Game():
             (
                 pn,
                 {
-                    "house" : self.p[pn].house
+                    "house" : self.p[pn].house,
+                    "player" : self.p[pn]
                 }
             )
             for pn # player name
