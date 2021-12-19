@@ -58,13 +58,13 @@ class Game():
 
         for bm in self.bounty_metadata['open']:
             ## TODO: Bug here. New members will not have their bounties auto-loaded from metadata when events begin.
-            if bm['open'] == event.number and bm['issuer'] in players:
+            if bm['open'] == event.number and bm['issuer'] in players and bm['short'] not in self.bounties:
                 self.bounties[bm['short']] = SoulBounty.from_metadata(bm, event, players)
 
         # Also need to add the closed ones, because they are not yet closed _in the simulation_
         for bm in self.bounty_metadata['closed']:
             ## TODO: Bug here. New members will not have their bounties auto-loaded from metadata when events begin.
-            if bm['open'] == event.number and bm['issuer'] in players:
+            if bm['open'] == event.number and bm['issuer'] in players and bm['short'] not in self.bounties:
                 self.bounties[bm['short']] = SoulBounty.from_metadata(bm, event, players)
 
     def load_bounty_metadata(self, filename):
