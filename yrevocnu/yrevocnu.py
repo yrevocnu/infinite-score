@@ -93,7 +93,8 @@ class Game():
                 pn,
                 {
                     "house" : self.p[pn].house,
-                    "player" : self.p[pn]
+                    "player" : self.p[pn],
+                    "total_attendance" : self.p[pn].total_attendance
                 }
             )
             for pn # player name
@@ -120,6 +121,7 @@ class Player():
         self.event_joined = None
         
         self.account = SamsaraCoinAccount()
+        self.total_attendance = 0
         
         if type(selector) is Player: 
             self.selector = selector
@@ -134,7 +136,8 @@ class Player():
         
         if type(entity) is Game:
             self.game = entity
-            self.meta.update(self.game.player_metadata[self.name])
+            if self.name in self.game.player_metadata:
+                self.meta.update(self.game.player_metadata[self.name])
             entity.add_player(self)
 
         elif type(entity) is House or entity is None:
@@ -170,8 +173,9 @@ class Player():
         
 class House():
     
-    def __init__(self, name):
+    def __init__(self, name, short_name):
         self.name = name
+        self.short_name = short_name
         self.members = {}
         
     def add_member(self, player):
@@ -185,9 +189,9 @@ class House():
 
 
 ## Should move to a configuration file
-reef = House("Reef Structure")
-woods = House("The Woods")
-fruits = House("Fruits Paradise")
+reef = House("Reef Structure", "reef")
+woods = House("The Woods", "woods")
+fruits = House("Fruits Paradise", "fruits")
 
 houses = {}
 
@@ -223,6 +227,7 @@ class Event():
         
         ## TODO: Move to event rule
         player.account.transact(amount)
+        player.total_attendance += amount
 
 class SamsaraCoinAccount():
     ## TODO : The account keeps track of the history of transactions with notes
@@ -312,6 +317,8 @@ def draw_player_network(game, event = None, size_scale = 300, only_attendees = T
     if event is not None:
         attendence = {p.name : event.attendees[p] for p in event.attendees}
         node_size = [attendence[pname] * size_scale if pname in attendence else 0.0 for pname in pn.nodes]
+    elif size_scale == 'total_attendance':
+        node_size = [game.p[pname].total_attendance * 300 for pname in pn.nodes]
     else:
         ## controversial ?!?
         node_size = [1 * size_scale for pname in pn.nodes]
@@ -381,3 +388,5 @@ def draw_player_network(game, event = None, size_scale = 300, only_attendees = T
                 font_color='green',
                 alpha = 0.7
             )
+
+    return pn, pos
