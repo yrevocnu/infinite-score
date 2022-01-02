@@ -86,29 +86,7 @@ class Game():
         """
         Yrevocnu specific: house and selectors
         """
-        graph = nx.DiGraph()
-    
-        graph.add_nodes_from([
-            (
-                pn,
-                {
-                    "house" : self.p[pn].house,
-                    "player" : self.p[pn],
-                    "total_attendance" : self.p[pn].total_attendance
-                }
-            )
-            for pn # player name
-            in self.p
-        ])
-    
-        graph.add_edges_from([
-            (pn, self.p[pn].selector.name)
-            for pn
-            in self.p
-            if self.p[pn].selector is not None
-        ])
-    
-        return graph   
+        return player_network(self.p) 
 
 class Player():
     
@@ -229,6 +207,9 @@ class Event():
         player.account.transact(amount)
         player.total_attendance += amount
 
+    def player_network(self):
+        return player_network({player.name : player for player in self.attendees})
+
 class SamsaraCoinAccount():
     ## TODO : The account keeps track of the history of transactions with notes
     
@@ -304,6 +285,37 @@ def house_color(house):
         return 'm'
     else:
         return '#444444'
+
+
+def player_network(player_dict):
+        """
+        Yrevocnu specific: house and selectors
+        """
+        graph = nx.DiGraph()
+    
+        graph.add_nodes_from([
+            (
+                pn,
+                {
+                    "house" : player_dict[pn].house,
+                    "player" : player_dict[pn],
+                    "total_attendance" : player_dict[pn].total_attendance
+                }
+            )
+            for pn # player name
+            in player_dict
+        ])
+    
+        graph.add_edges_from([
+            (pn, player_dict[pn].selector.name)
+            for pn
+            in player_dict
+            if player_dict[pn].selector is not None
+        ])
+
+        graph = graph.subgraph([pn for pn in player_dict])
+    
+        return graph   
 
     
 def draw_player_network(game, event = None, size_scale = 300, only_attendees = True):
