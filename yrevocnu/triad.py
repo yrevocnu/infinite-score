@@ -10,10 +10,9 @@ import random
 from yrevocnu import (
     Game, 
     Player, 
-    House, 
+    houses,
     Event, 
-    SamsaraCoinAccount, 
-    SoulBounty, 
+    house_color,
     draw_player_network,
     reef, 
     woods, 
@@ -120,7 +119,7 @@ def create_pseudohouses(event, houses = (reef, woods, fruits), to_remove = []):
 
 
 
-def draw_event_with_teams(game : Game, event : Event, teams : list[tuple[str]]):
+def draw_event_with_teams(game : Game, event : Event, teams : list[tuple[str]], pseudohouse_lists):
 
     team_graph = nx.Graph()
     
@@ -136,8 +135,28 @@ def draw_event_with_teams(game : Game, event : Event, teams : list[tuple[str]]):
         
     plt.figure(3,figsize=(12,7.5)) 
 
-
     epn, epos = draw_player_network(game, event)
+
+    ## pseudohouse halos
+
+    ## nulls
+    null_house_list = [x[0] for x in list(epn.nodes(data=True))
+                       if 'house' not in x[1] or x[1]['house'] is None]
+
+    def which_pseudohouse(name, phl):
+        for ph in phl:
+            if name in phl[ph]:
+                return houses[ph]
+
+    node_colors = [house_color(which_pseudohouse(m, pseudohouse_lists)) for m in null_house_list]
+
+    nx.draw_networkx_nodes(
+        epn, pos=epos,
+        nodelist=null_house_list,
+        node_color = node_colors,
+        alpha = 0.1,
+        node_size = 300 * 2.5
+    )
 
     nx.draw_networkx_edges(
         team_graph,
