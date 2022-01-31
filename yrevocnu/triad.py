@@ -120,17 +120,25 @@ def create_pseudohouses(event, houses = (reef, woods, fruits), to_remove = []):
             null_house_list.remove(rp)
 
     players = {p.name : p for p in event.attendees}
-            
+
+    # TODO: Worst-case shuffles can lead to imbalanced pseudohouse numbers.
+    # Better to do a perfect 'card' shuffle, or order with selector houses.
+    random.shuffle(null_house_list)
+
     for null_player in null_house_list:
         selector_house = players[null_player].selector.house if players[null_player].selector is not None else None
-    
+
         house_options = [
             house_lists[hn] for hn in house_lists 
             if selector_house is None or hn != selector_house.short_name ]
     
         index, element = min(enumerate(house_options), key=lambda x: len(itemgetter(1)(x)))
-    
+
+        print(null_player, house_options, index)
+
         element.append(null_player)
+
+
         
     return house_lists
 
