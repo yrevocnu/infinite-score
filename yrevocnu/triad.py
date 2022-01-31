@@ -158,7 +158,7 @@ def draw_event_with_teams(game : Game, event : Event, teams : list[tuple[str]], 
         team_graph.add_edge(b,c, team = True)
         team_graph.add_edge(c,a, team = True)
         
-    plt.figure(3,figsize=(12,7.5)) 
+    plt.figure(3,figsize=(11,11))
 
     epn, epos = draw_player_network(game, event)
 
