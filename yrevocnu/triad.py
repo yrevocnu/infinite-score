@@ -23,14 +23,27 @@ from yrevocnu import (
 def team_leader_score(team, g):
     return max([g.nodes[p]["total_attendance"] for p in team])
 
+shortest_path_cache = {}
+
+def shortest_path_length_lookup(g , source, target):
+    if g not in shortest_path_cache:
+        shortest_path_cache[g] = {}
+
+    if (source, target) in shortest_path_cache[g]:
+        return shortest_path_cache[g][(source, target)]
+    else:
+        spl =  nx.shortest_path_length(g,source,target) + 1
+        shortest_path_cache[g][(source, target)] = spl
+        return spl
+
 
 def team_dist_score(team, g):
     ## team is a tuple of node labels
     ## Compute area of implied triangle using Heron's Formula
     
-    a = nx.shortest_path_length(g,source=team[0],target=team[1]) + 1
-    b = nx.shortest_path_length(g,source=team[1],target=team[2]) + 1
-    c = nx.shortest_path_length(g,source=team[2],target=team[0]) + 1
+    a = shortest_path_length_lookup(g,source=team[0],target=team[1])
+    b = shortest_path_length_lookup(g,source=team[1],target=team[2])
+    c = shortest_path_length_lookup(g,source=team[2],target=team[0])
 
     p = (a + b + c) / 2
 
@@ -40,7 +53,7 @@ def team_blend_score(team, g):
     return 3 * team_dist_score(team, g) + team_leader_score(team, g)
         
 def team_assignment_value(teams, g, score_func = team_blend_score):
-    return sum(map(score_func,teams, [g.to_undirected()] * len(teams)))
+    return sum(map(score_func,teams, [g] * len(teams)))
 
 
 def find_best_team_assigment(phl : dict[str, list[str]], game : Game, score_func = team_blend_score, tries = 500):
@@ -48,15 +61,19 @@ def find_best_team_assigment(phl : dict[str, list[str]], game : Game, score_func
     """
 
     gn = game.player_network()
+    ugn = gn.to_undirected()
     values = [0]
 
     teams = list(zip(*[phl[ph] for ph in phl]))
-    value = team_assignment_value(teams, gn, score_func = score_func)
+    value = team_assignment_value(teams, ugn, score_func = score_func)
 
     for i in range(tries):
+        if i % 500 == 0:
+            print(i)
+
         new_teams = list(zip(*[random.sample(phl[ph], len(phl[ph])) for ph in phl]))
     
-        new_value = team_assignment_value(new_teams, gn, score_func = score_func)
+        new_value = team_assignment_value(new_teams, ugn, score_func = score_func)
         values.append(new_value)
     
         if new_value > value:
