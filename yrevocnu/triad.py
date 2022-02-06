@@ -21,7 +21,12 @@ from yrevocnu import (
 
 
 def team_leader_score(team, g):
-    return max([g.nodes[p]["total_attendance"] for p in team])
+    attendance_counts = [g.nodes[p]["total_attendance"] for p in team]
+
+    attendance_counts.sort(reverse=True)
+
+    # maximum minus minimum
+    return attendance_counts[0] + attendance_counts[1] ** 0.5 - attendance_counts[2]
 
 shortest_path_cache = {}
 
@@ -121,17 +126,21 @@ def create_pseudohouses(event, houses = (reef, woods, fruits), to_remove = []):
 
     players = {p.name : p for p in event.attendees}
 
-    # TODO: Worst-case shuffles can lead to imbalanced pseudohouse numbers.
-    # Better to do a perfect 'card' shuffle, or order with selector houses.
-    random.shuffle(null_house_list)
+    # Mix up the null house members by selector house to get even house sizes.
+    def selector_house(player):
+        return players[player].selector.house if players[player].selector is not None else None
+
+    null_house_list.sort(key = lambda np: str(selector_house(np)))
+
+    null_house_list = null_house_list[::4] + null_house_list[1::4] + null_house_list[2::4] + null_house_list[3::4]
 
     for null_player in null_house_list:
-        selector_house = players[null_player].selector.house if players[null_player].selector is not None else None
+        s_house = selector_house(null_player)
 
         house_options = [
             house_lists[hn] for hn in house_lists 
-            if selector_house is None or hn != selector_house.short_name ]
-    
+            if s_house is None or hn != s_house.short_name ]
+
         index, element = min(enumerate(house_options), key=lambda x: len(itemgetter(1)(x)))
 
         print(null_player, house_options, index)
