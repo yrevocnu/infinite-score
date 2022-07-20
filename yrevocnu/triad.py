@@ -73,9 +73,11 @@ def find_best_team_assigment(phl : dict[str, list[str]], game : Game, score_func
     value = team_assignment_value(teams, ugn, score_func = score_func)
 
     for i in range(tries):
-        if i % 500 == 0:
+        if i % 5000 == 0:
             print(i)
 
+        # Would be better to iterate over all combinations, to avoid redundancy
+        # or hill-climb
         new_teams = list(zip(*[random.sample(phl[ph], len(phl[ph])) for ph in phl]))
     
         new_value = team_assignment_value(new_teams, ugn, score_func = score_func)

@@ -378,12 +378,14 @@ def draw_player_network(game, event = None, size_scale = 300, only_attendees = T
                 (b.issuer.name, b.target.name)
                 for b
                 in these_bounties
+                if b.issuer.name in pos ## TODO: Deal with this better
             ])
         
             bounty_labels = {
                 (b.issuer.name, b.target.name) : b.description
                 for b
                 in these_bounties
+                if b.issuer.name in pos ## TODO: Deal with this better
             }
     
             nx.draw_networkx_edges(
