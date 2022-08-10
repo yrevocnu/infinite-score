@@ -338,7 +338,15 @@ def draw_player_network(game, event = None, size_scale = 300, only_attendees = T
         # current bank balance
         # node_size = [game.p[pname].account.balance * size_scale for pname in pn.nodes]
 
-    pos = nx.drawing.nx_pydot.pydot_layout(pn)
+    # need to run layout on a copy of the network with no ':''s in the attributes for some reason.
+    pn_double = pn.copy()
+
+    for node, attributes in pn_double.nodes(data=True):
+        for attr in list(attributes.keys()):
+            del pn_double.nodes[node][attr]
+
+
+    pos = nx.drawing.nx_pydot.pydot_layout(pn_double)
 
     if event is not None:
         # gray halo for organizer
