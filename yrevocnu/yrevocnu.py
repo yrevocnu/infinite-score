@@ -139,12 +139,12 @@ class Player():
             if len(bounties_targetting_me) > 0:
                 for bm in bounties_targetting_me:
                     try:
-                        self.game.bounties[bm['short']].fulfill(self)
-                    except:
+                        self.game.bounties[bm['short']].fulfill(self, game = self.game)
+                    except Exception as e:
                         # debugging
-                        print(b)
-                        print(self.game.bounties)
-        
+                        print(e)
+                        import pdb; pdb.set_trace()
+
     def select(self, new_name, **meta):
         new_player = Player(new_name, selector = self, **meta)
         new_player.join(self.game)
@@ -225,14 +225,14 @@ class SamsaraCoinAccount():
         
 class SoulBounty():
     
-    def __init__(self, issuer, description, value, open_event = None, long_description = None):
+    def __init__(self, issuer, description, value, awardee = None, open_event = None, long_description = None):
         self.issuer = issuer
         self.description = description
         
         self.long_description = long_description
         
         self.target = None
-        self.awardee = None
+        self.awardee = awardee
         
         self.open_event = open_event
         self.close_event = None
@@ -258,16 +258,32 @@ class SoulBounty():
             players[metadata['issuer']],
             metadata['short'],
             metadata['value'],
+            awardee = metadata['awardee'] if 'awardee' in metadata else None,
             open_event = event,
             long_description = (metadata['long'] if 'long' in metadata else None)
         )
         
-    def fulfill(self, target):
-        print(f"Bounty fulfilled by {target.name}, award goes to {target.selector.name}")
+    def fulfill(self, target, game = None):
         self.target = target
-        self.awardee = target.selector
-        
-        self.account.transfer(self.awardee.account, self.value)
+
+        # This will replace a string with a Player object
+        if self.awardee is None:
+            self.awardee = target.selector
+        elif self.awardee == target.name:
+            self.awardee = target
+        elif game is not None:
+            self.awardee = game.p[self.awardee]
+        else:
+            print(f"Failed to find Player corresponding to awardee {self.awardee}")
+
+        print(f"Bounty fulfilled by {target.name}, award goes to {self.awardee.name}")
+
+        try:
+            self.account.transfer(self.awardee.account, self.value)
+        except Exception as e:
+            print(e)
+            import pdb; pdb.set_trace()
+
         del self.account
         
         # figure out what to do here; you should be able to collect multiple epitaphs?
